@@ -1,6 +1,6 @@
 ## Challenge #1
 
-### Code:
+### Code
 ```javascript
 function generatePattern() {  
   let result = "";  
@@ -16,14 +16,14 @@ function generatePattern() {
 console.log(generatePattern());
 ```
 
-### Output:
+### Output
 ```
 1 
 1 2 
 1 2 3
 ```
 
-### Explanation:
+### Explanation
 - `generatePattern` function creates a number pattern using nested loops.
 - The outer loop runs from 1 to 3, controlling the number of rows, while the inner loop runs from 1 to `i`, adding numbers up to the current row and appending them with spaces.
 - After each row is completed, `\n` moves to the next line, forming a pattern where each row contains numbers from 1 to its row number.
@@ -32,7 +32,7 @@ console.log(generatePattern());
 
 ## Challenge #2
 
-### Code:
+### Code
 ```javascript
 function swapFirstLast(arr) {  
   let first = arr.shift();  
@@ -47,13 +47,13 @@ console.log(swapFirstLast(numbers));
 console.log(numbers); 
 ```
 
-### Output:
+### Output
 ```
 [ 40, 20, 30, 10 ]
 [ 40, 20, 30, 10 ]
 ```
 
-### Explanation:
+### Explanation
 - `swapFirstLast(arr)` function modifies the original array by swapping its first and last elements. It first removes the first element using `shift()` and stores it in the variable `first`.
 - Then, it removes the last element with `pop()` and moves it to the beginning using `unshift()`, while the first element is added back at the end with `push()`.
 - Since arrays in JavaScript are passed by reference, these changes directly modify the original array.
@@ -63,7 +63,7 @@ console.log(numbers);
 
 ## Challenge #3
 
-### Code:
+### Code
 ```javascript
 function filterPassingGrades(grades) {  
   let passing = [];  
@@ -81,12 +81,12 @@ let scores = [85, 45, 90, 60];
 console.log(filterPassingGrades(scores));
 ```
 
-### Output:
+### Output
 ```
 [ 60, 45, 85, 90 ]
 ```
 
-### Explanation:
+### Explanation
 - `filterPassingGrades` function separates passing and failing grades from an array. It initializes an empty `passing` array and iterates through `grades` using a `for...of` loop.
 - If a grade is 70 or higher, it is added to the end of `passing` using `push()`. Otherwise, it is added to the beginning using `unshift()`, ensuring failing grades appear first in the final array.
 - Given the input `[85, 45, 90, 60]`, the function first places 45 and 60 at the front, then appends 85 and 90, resulting in `[60, 45, 85, 90]`.
@@ -95,7 +95,7 @@ console.log(filterPassingGrades(scores));
 
 ## Challenge #4
 
-### Code:
+### Code
 ```javascript
 function updateStatus(tasks) {  
   for (let task of tasks) {  
@@ -113,13 +113,13 @@ console.log(updateStatus(taskList));
 console.log(taskList);  
 ```
 
-### Output:
+### Output
 ```
 [ { id: 1, completed: true }, { id: 2, completed: false } ]
 [ { id: 1, completed: true }, { id: 2, completed: false } ]
 ```
 
-### Explanation:
+### Explanation
 - `updateStatus` function toggles the `completed` status of each task in the given array. It uses a `for...of` loop to iterate through `tasks` and flips the `completed` property using `!task.completed`, changing `true` to `false` and vice versa.
 - When the function is called with `taskList`, the first task's `completed` status changes from `false` to `true`, and the second task changes from `true` to `false`.
 
@@ -127,7 +127,7 @@ console.log(taskList);
 
 ## Challenge #5
 
-### Code:
+### Code
 ```javascript
 function findValue(arr, target) {  
   for (let i = 0; i < arr.length; i++) {  
@@ -143,13 +143,13 @@ console.log(findValue(data, 12));
 console.log(findValue(data, 100));
 ```
 
-### Output:
+### Output
 ```
 Found at index 1
 Not found
 ```
 
-### Explanation:
+### Explanation
 - `findValue` function searches for a target value in an array. It uses a `for` loop to iterate through `arr`, checking if each element matches `target`.
 - If a match is found, it returns the index as "Found at index X". If the loop completes without finding the value, it returns "Not found".
 - Given the array `[5, 12, 8, 130, 44]`, searching for `12` returns "Found at index 1", while searching for `100` returns "Not found" since it is not in the array.
