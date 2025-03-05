@@ -97,45 +97,28 @@ the third after 2 seconds,until it ends.
 */
 
 /* Task 5: Interactive Quiz Game (Extra Miles) */
-const readline = require("readline"); 
-
-const user = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
 function askQuestion(question, choices, correctAnswer, callback) {
-    console.log(`${question}\nChoices: ${choices.join(", ")}`); 
-    user.question("Your answer: ", (userAnswer) => {
-        let isCorrect = userAnswer.trim() === correctAnswer; 
-        callback(isCorrect);
-        user.close(); 
-    });
+    let userAnswer = prompt(`${question}\nChoices: ${choices.join(", ")}`);
+    let isCorrect = userAnswer.trim() === correctAnswer;
+    callback(isCorrect);
 }
 
 function checkAnswer(isCorrect) {
     if (isCorrect) {
-        console.log("Correct!");
+        alert("Correct!");
     } else {
-        console.log("Wrong!");
+        alert("Wrong!");
     }
 }
 
-askQuestion("What is 2 + 2?", ["1", "2", "3", "4"], "4", checkAnswer);
-/*Solution: 
-- in this task, there are lots of approach to use, but in my case i used Readline module for me to fetch the user input.
-
-- First, we import the readline module in Node.js, which allows us to read user input from the terminal, just like i said in the first line.
-We create an interface (user) using readline.createInterface(), specifying that it will take input 
-from process.stdin (the keyboard) and output to process.stdout (the console).
-
-- Inside the askQuestion function, we use console.log() to print the question and available choices in a readable format. 
-The choices.join(", ") ensures that all options are displayed as a comma-separated list.
-
-- We use user.question() to prompt the user for an answer. When the user enters a response, it remove any extra spaces and compare it with the correctAnswer. 
-If the answers match, the variable isCorrect is set to true; otherwise, it’s false.
-
-- Once the user inputs their answer, we pass isCorrect to the callback function (which is checkAnswer). 
-
-- After processing the user’s response, we call user.close() to terminate the input session. 
-This ensures that the program does not keep waiting for further input after the answer has been checked. */
+// Call the function when the script runs
+document.getElementById("quizButton").addEventListener("click", function() {
+    askQuestion("What is 2 + 2?", ["1", "2", "3", "4"], "4", checkAnswer);
+});
+/* Solution:
+- In this task, there are multiple ways to handle user input. Instead of using the Node.js Readline module, we use the built-in `prompt()` function in the browser.
+- The `askQuestion` function takes a question, an array of choices, the correct answer, and a callback function. It displays the question and choices using `prompt()`, allowing the user to input their answer.
+- The user's input is trimmed to remove extra spaces and then compared with the correct answer. If the answers match, the variable `isCorrect` is set to `true`; otherwise, it’s `false`.
+- The `checkAnswer` function receives `isCorrect` and displays an alert message indicating whether the answer is correct or incorrect.
+- Instead of running the function immediately, we attach it to a button click event using `document.getElementById("quizButton").addEventListener("click", ...)`. This ensures that the quiz starts only when the user clicks the button.
+*/
