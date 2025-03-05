@@ -1,98 +1,55 @@
-/* Random Character Generator */
-
 /* Task 1: Create a Character Object*/
+/**
+ * DOCU: Defines a character object with a name, health, and a randomly assigned class  
+ * @param {string} name - The name of the character  
+ * @param {number} health - The health value of the character  
+ * @param {array} class - The available classes for the character  
+ * @returns {void} - Assigns a random class and allows health randomization  
+ */
 const character = {
     name: "Hero",
     health: 100,
-    class: ["Warrior", "Mage", "Archer", "Healer", "Assassin"] /*Task 2: Adding a Random Class*/
-    [Math.floor(Math.random() * 5 )],
-    randomizeHealth: function () { /* Task 3: Add Randomized Health */
+    class: ["Warrior", "Mage", "Archer", "Healer", "Assassin"]
+        [Math.floor(Math.random() * 5)], // Task 2: Assign a random class  
+
+    /** 
+     * DOCU: Assigns a random health value between 50 and 150  
+     * @returns {void} - Updates the character's health property  
+     */
+    randomizeHealth: function () { 
         this.health = Math.floor(Math.random() * (150 - 50 + 1)) + 50;
     }
 };
-// now, we will test the random health function 
+// Test the random health function  
 character.randomizeHealth();
-console.log(character); // should log a random value between 50 to 150 
-/* example output: 
-{
-  name: 'Hero',
-  health: 115,
-  class: 'Assassin',
-  randomizeHealth: [Function: randomizeHealth]
-}
-*/
+console.log(character.health); // Should log a random value between 50 to 150  
 
 /* Task 4:Assign a Special Ability */
-// we will add a specialAbility property
-// also, assign it a random value from ["Fireball", "Healing Touch", "Stealth", "Lightning Strike", "Power Slash"].
-
-/*Task 5: Create a generateCharacter() Function */
-// this will create and return a new character object.
-// if no name is proviced, we will randomly choose one from ["Thorin", "Elara", "Zane", "Ivy", "Dante"].
-// will also assign a random class, health, and special ability.
-
+/**
+ * DOCU: Generates a character with random attributes (or a provided name).
+ * @param {string|null} name - The name of the character (random if null).
+ * @returns {object} - A character object with randomized attributes and a battle method.
+ */
 function generateCharacter(name = null) {
-    const names = ["Thorin", "Elara", "Zane", "Ivy", "Dante"];
-    const classes = ["Warrior", "Mage", "Archer", "Healer", "Assassin"];
-    const abilities = ["Fireball", "Healing Touch", "Stealth", "Lightning Strike", "Power Slash"];
+    const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)]; // Helper function for random selection  
 
     const character = {
-        name: name || names[Math.floor(Math.random() * names.length)],
-        class: classes[Math.floor(Math.random() * classes.length)],
-        health: Math.floor(Math.random() * (150 - 50 + 1)) + 50,
-        specialAbility: abilities[Math.floor(Math.random() * abilities.length)],
-    };
+        name: name || getRandomElement(["Thorin", "Elara", "Zane", "Ivy", "Dante"]),
+        class: getRandomElement(["Warrior", "Mage", "Archer", "Healer", "Assassin"]),
+        health: Math.floor(Math.random() * 101) + 50, // Random health between 50-150
+        specialAbility: getRandomElement(["Fireball", "Healing Touch", "Stealth", "Lightning Strike", "Power Slash"]),
 
-    return character;
-}
-
-// Testing character generation
-const randomCharacter = generateCharacter(); // this one is a randomCharacter from the function generate names.
-console.dir(randomCharacter);
-
-const namedCharacter = generateCharacter("Lastik-man"); // we assigned name to this one to see and compare the difference
-console.dir(namedCharacter);
-/*Sample output: 
-{ 
-  name: 'Ivy',
-  class: 'Warrior',
-  health: 145,
-  specialAbility: 'Healing Touch'
-}
-
-{
-  name: 'Lastik-man',
-  class: 'Archer',
-  health: 99,
-  specialAbility: 'Healing Touch'
-}
-*/
-
-/*Task 6: Battle Simulation */
-// we will add a battle(otherCharacter) methos inside each generated character
-// if a character attacks another, their health decreases by a random amount (between 5 and 20)
-// and we will log a message showing the attack details, that includes health reduction.
-
-function generateCharacter(name = null) {
-    const names = ["Thorin", "Elara", "Zane", "Ivy", "Dante"];
-    const classes = ["Warrior", "Mage", "Archer", "Healer", "Assassin"];
-    const abilities = ["Fireball", "Healing Touch", "Stealth", "Lightning Strike", "Power Slash"];
-
-    const character = {
-        name: name || names[Math.floor(Math.random() * names.length)],
-        class: classes[Math.floor(Math.random() * classes.length)],
-        health: Math.floor(Math.random() * (150 - 50 + 1)) + 50,
-        specialAbility: abilities[Math.floor(Math.random() * abilities.length)],
-
-        // Battle method 
-        battle: function (otherCharacter) {
-            const damage = Math.floor(Math.random() * (20 - 5 + 1)) + 5;
-            const oldHealth = otherCharacter.health;
-            otherCharacter.health -= damage;
+        /**  
+         * DOCU: Simulates a battle where the character attacks another, reducing their health.
+         * @param {object} otherCharacter - The character being attacked.
+         */
+        battle(otherCharacter) {
+            const damage = Math.floor(Math.random() * 16) + 5; // Random damage between 5-20  
+            otherCharacter.health = Math.max(0, otherCharacter.health - damage); // Prevent negative health  
 
             console.log(
-                `Character ${this.name} attacked Character ${otherCharacter.name} with ${this.specialAbility}. ` +
-                `${otherCharacter.name}'s health dropped from ${oldHealth} to ${otherCharacter.health}.`
+                `${this.name} attacked ${otherCharacter.name} with ${this.specialAbility}, dealing ${damage} damage! ` +
+                `${otherCharacter.name} now has ${otherCharacter.health} HP.`
             );
         }
     };
@@ -100,43 +57,31 @@ function generateCharacter(name = null) {
     return character;
 }
 
-// Example Battle 
+/* Task 5: Testing Character Generation */
+
+// Generates a fully randomized character  
+const randomCharacter = generateCharacter();  
+console.dir(randomCharacter);  
+
+// Generates a character with a provided name ("Lastik-man"), but random other attributes  
+const namedCharacter = generateCharacter("Lastik-man");  
+console.dir(namedCharacter);  
+
+/* Task 6: Battle Simulation */
+
+// Example Battle  
 const character1 = generateCharacter("Zane");
 const character2 = generateCharacter("Elara");
 
-character1.battle(character2);
-// Each character now has a .battle(otherCharacter) method.
-// attacker deals a random damage between 5 and 20 to the opponent.
-// logs a battle message showing the attack and health reduction.
-
-/* example output: 
-    {
-  name: 'Hero',
-  health: 95,
-  class: 'Archer',
-  randomizeHealth: [Function: randomizeHealth]
-}
-{
-  name: 'Thorin',
-  class: 'Assassin',
-  health: 100,
-  specialAbility: 'Healing Touch',
-  battle: [Function: battle]
-}
-{
-  name: 'Lastik-man',
-  class: 'Healer',
-  health: 69,
-  specialAbility: 'Lightning Strike',
-  battle: [Function: battle]
-}
-Character Zane attacked Character Elara with Power Slash. Elara's health dropped from 146 to 132.
-*/
+character1.battle(character2); // Zane attacks Elara
 
 /* Task 7: Generate Multiple Characters */
-// we created a function generateMultipleCharacters(x)
-// it should return an array containing randomly generated characters (x)
-
+/** 
+ * DOCU: Generates multiple random characters  
+ * - Calls `generateCharacter()` multiple times to create an array of characters  
+ * @param {number} x - The number of characters to generate  
+ * @returns {Array<object>} - An array of randomly generated character objects  
+ */
 function generateMultipleCharacters(x) {
     const characters = [];
     for (let i = 0; i < x; i++) {
@@ -144,54 +89,7 @@ function generateMultipleCharacters(x) {
     }
     return characters;
 }
-// will generate random characters (in my case i want 5 random characters.)
+
+// Generates an array of 5 random characters
 const party = generateMultipleCharacters(5);
 console.dir(party);
-
-/*sample output: 
-[
-  {
-    name: 'Thorin',
-    class: 'Assassin',
-    health: 131,
-    specialAbility: 'Healing Touch',
-    battle: [Function: battle]
-  },
-  {
-    name: 'Dante',
-    class: 'Assassin',
-    health: 126,
-    specialAbility: 'Fireball',
-    battle: [Function: battle]
-  },
-  {
-    name: 'Dante',
-    class: 'Assassin',
-    health: 118,
-    specialAbility: 'Fireball',
-    battle: [Function: battle]
-  },
-  {
-    name: 'Elara',
-    class: 'Archer',
-    health: 106,
-    specialAbility: 'Healing Touch',
-    battle: [Function: battle]
-  },
-  {
-    name: 'Ivy',
-    class: 'Mage',
-    health: 144,
-    specialAbility: 'Stealth',
-    battle: [Function: battle]
-  }
-]
-*/ 
-// i created a final script that contains task 1-7 in well mannered structure.
-
-
-
-
-
-
-
